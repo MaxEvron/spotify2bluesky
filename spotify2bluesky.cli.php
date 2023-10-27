@@ -1,9 +1,10 @@
 #!/usr/bin/php
 <?php
 
-// Go to https://developer.spotify.com/dashboard/create to create your app, check Web API, then copy-paste your client_id and client_secret bellow
+// Go to https://developer.spotify.com/dashboard/create to create your app, check Web API, then copy-paste your client_id, client_secret and redirect_uri bellow
 define('SPOT_CLIENT_ID', '<< client_id >>');
 define('SPOT_CLIENT_SECRET', '<< client_secret >>');
+define('SPOT_REDIRECT_URI', '<< redirect_uri >>');
 
 // Go to https://bsky.app/settings/app-passwords to create an app password, then copy-paste your handle (without @) and app password
 define('BLUE_HANDLE', '<< handle_without_@ >>');
@@ -44,7 +45,7 @@ function doSpotifyAuth()
         'response_type' => 'code',
         'client_id' => SPOT_CLIENT_ID,
         'scope' => 'user-read-private user-library-read',
-        'redirect_uri' => 'https://spotify.gay.bzh/',
+        'redirect_uri' => SPOT_REDIRECT_URI,
         'state' => $state = generateRandomString()
     ]);
 
@@ -74,7 +75,7 @@ function doSpotifyAuth()
                 CURLOPT_POSTFIELDS => http_build_query([
                     'grant_type' => 'authorization_code',
                     'code' => $s2b_code,
-                    'redirect_uri' => 'https://spotify.gay.bzh/'
+                    'redirect_uri' => SPOT_REDIRECT_URI
                 ])
             ]);
 
